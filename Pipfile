@@ -8,6 +8,7 @@ pandas = "*"
 numpy = "*"
 keras = "*"
 tensorflow-gpu = "*"
+"autopep8" = "*"
 
 [dev-packages]
 jupyterlab = "*"
