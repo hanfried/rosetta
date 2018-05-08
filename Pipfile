@@ -9,10 +9,15 @@ numpy = "*"
 keras = "*"
 tensorflow-gpu = "*"
 "autopep8" = "*"
+requests = "*"
+tqdm = "*"
+matplotlib = "*"
 
 [dev-packages]
 jupyterlab = "*"
 jupyter = "*"
+nbextensions = "*"
+jupyter-contrib-nbextensions = "*"
 
 [requires]
 python_version = "3.6"
