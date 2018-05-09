@@ -13,6 +13,8 @@ requests = "*"
 tqdm = "*"
 matplotlib = "*"
 sklearn = "*"
+spacy = "*"
+nltk = "*"
 
 [dev-packages]
 jupyterlab = "*"
