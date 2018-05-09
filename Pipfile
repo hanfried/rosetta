@@ -12,6 +12,7 @@ tensorflow-gpu = "*"
 requests = "*"
 tqdm = "*"
 matplotlib = "*"
+sklearn = "*"
 
 [dev-packages]
 jupyterlab = "*"
