@@ -6,5 +6,5 @@
 
 ## Models step for step:
 
-1. [Simple Model with Keras for adding and subtracting numbers end-to-end on chars](SimpleKerasModelForAddingAndSubstraction.ipynb)
+1. [Simple Model with Keras for adding and subtracting numbers end-to-end on chars](SimpleModelForAddingAndSubstraction.ipynb)
 
