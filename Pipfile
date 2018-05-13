@@ -17,6 +17,7 @@ spacy = "*"
 nltk = "*"
 sentencepiece = "*"
 gensim = "*"
+jupyter = "*"
 
 [dev-packages]
 jupyterlab = "*"
