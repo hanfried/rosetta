@@ -18,6 +18,7 @@ nltk = "*"
 sentencepiece = "*"
 gensim = "*"
 jupyter = "*"
+tables = "*"
 
 [dev-packages]
 jupyterlab = "*"
