@@ -58,7 +58,7 @@ def read_europarl(language, data_path='data'):
     preprocessed_fname = f'{corpus_fname}.preprocessed'
 
     if os.path.exists(preprocessed_fname):
-        return open(preprocessed_fname).readlines()
+        return [line.strip() for line in open(preprocessed_fname)]
     else:
         preprocessed = [preprocess_europarl(line) for line in tqdm(open(corpus_fname, 'r'))]
 
