@@ -1,5 +1,8 @@
+import keras
 import keras.layers as L
 from keras.models import Model
+from keras.preprocessing.sequence import pad_sequences
+import numpy as np
 import tensorflow as tf
 
 
@@ -10,7 +13,9 @@ class Seq2SeqWithBPE:
         latent_dim=512, dropout=0.5, train_embeddings=True
     ):
         self.bpe_input = bpe_input
-        self.bpe_target = bpe_input
+        self.bpe_target = bpe_target
+        self.max_len_input = max_len_input
+        self.max_len_target = max_len_target
         self.latent_dim = latent_dim
         self.dropout = dropout
 
@@ -109,3 +114,84 @@ class Seq2SeqWithBPE:
             inputs=[self.decoder_inputs, self.inference_decoder_state_inputs],
             outputs=[self.inference_decoder_outputs, self.inference_decoder_states]
         )
+
+    def create_batch_generator(
+        self, samples_ids, input_sequences, target_sequences, batch_size
+    ):
+    
+        def batch_generator():
+            nr_batches = np.ceil(len(samples_ids) / batch_size)
+            while True:
+                shuffled_ids = np.random.permutation(samples_ids)
+                batch_splits = np.array_split(shuffled_ids, nr_batches)
+                for batch_ids in batch_splits:
+                    batch_X = pad_sequences(
+                        input_sequences.iloc[batch_ids],
+                        padding='post',
+                        maxlen=self.max_len_input
+                    )
+                    batch_y = pad_sequences(
+                        target_sequences.iloc[batch_ids],
+                        padding='post',
+                        maxlen=self.max_len_target
+                    )
+                    batch_y_t_output = keras.utils.to_categorical(
+                        batch_y[:, 1:],
+                        num_classes=self.nr_target_tokens
+                    )
+                    batch_x_t_input = batch_y[:, :-1]
+                    yield ([batch_X, batch_x_t_input], batch_y_t_output)
+        
+        return batch_generator()
+
+    def decode_beam_search(self, input_seq, beam_width):
+        initial_states = self.inference_encoder_model.predict(input_seq)
+        
+        top_candidates = [{
+            'states': initial_states,
+            'idx_sequence': [self.bpe_target.start_token_idx],
+            'token_sequence': [self.bpe_target.start_token],
+            'score': 0.0,
+            'live': True
+        }]
+        live_k = 1
+        dead_k = 0
+        
+        for _ in range(self.max_len_target):
+            if not(live_k and dead_k < beam_width):
+                break
+            new_candidates = []
+            for candidate in top_candidates:
+                if not candidate['live']:
+                    new_candidates.append(candidate)
+                    continue
+             
+                target_seq = np.zeros((1, self.max_len_target - 1))
+                target_seq[0, 0] = candidate['idx_sequence'][-1]
+                output, states = self.inference_decoder_model.predict(
+                    [target_seq, candidate['states']]
+                )
+                probs = output[0, 0, :]
+            
+                for idx in np.argsort(-probs)[:beam_width]:
+                    new_candidates.append({
+                        'states': states,
+                        'idx_sequence': candidate['idx_sequence'] + [idx],
+                        'token_sequence': (
+                            candidate['token_sequence'] + [self.bpe_target.tokens[idx]]
+                        ),
+                        # sum -log(prob) numerical more stable than to multiplikate probs
+                        # goal now to minimize the score
+                        'score': candidate['score'] - np.log(probs[idx]),
+                        'live': idx != self.bpe_target.stop_token_idx,
+                    })
+            
+            top_candidates = sorted(
+                new_candidates, key=lambda c: c['score']
+            )[:beam_width]
+            
+            alive = np.array([c['live'] for c in top_candidates])
+            live_k = sum(alive == True)
+            dead_k = sum(alive == False)
+            
+        return self.bpe_target.sentencepiece.DecodePieces(top_candidates[0]['token_sequence'])
