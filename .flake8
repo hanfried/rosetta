@@ -1,8 +1,11 @@
 [flake8]
-# my default settings from https://github.com/hanfried/dotfiles/blob/master/config/flake8
-ignore = D100,D101,D102,D103,D105,W293
+
+ignore = 
+    # my default settings from https://github.com/hanfried/dotfiles/blob/master/config/flake8    
+    D100,D101,D102,D103,D105,W293,
+    # look at https://github.com/PyCQA/pycodestyle/issues/450
+    # why I prefer to ignore this Pep8 in combination to numpy
+    ignore = E712,E713 
+
 max-line-length = 95
-# look at https://github.com/PyCQA/pycodestyle/issues/450
-# why I prefer to ignore this Pep8 in combination to numpy
-ignore = E712 
 
