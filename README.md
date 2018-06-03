@@ -1,7 +1,7 @@
 ## State of the art overview for seq2seq models
 
 * for toy problems, machine translation, summaries and chat botting
-* in Keras first, then maybe PyTorch / Tensorflow
+* in Keras first, then Tensorflow, maybe PyTorch / Tensorflow Hub
 * from ground up simple model adding more higher level approaches (bytepairencodings, beam search, attentions, ...) 
 
 ## Models step for step:

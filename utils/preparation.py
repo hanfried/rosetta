@@ -15,13 +15,14 @@ np.random.seed(RANDOM_STATE)
 tf.set_random_seed(RANDOM_STATE)
 print(f"Fixed random seed to {RANDOM_STATE}")
 
-# technical detail so that an instance (maybe running in a different window)
-# doesn't take all the GPU memory resulting in some strange error messages
-GPU_MEMORY_FRACTION = 0.5
-config = tf.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = GPU_MEMORY_FRACTION
-set_session(tf.Session(config=config))
-print(f"Set gpu memory fraction to {GPU_MEMORY_FRACTION}")
+# FIXME(js): Remove, should be unnecessary when working with tensorflow directly
+# # technical detail so that an instance (maybe running in a different window)
+# # doesn't take all the GPU memory resulting in some strange error messages
+# GPU_MEMORY_FRACTION = 0.5
+# config = tf.ConfigProto()
+# config.gpu_options.per_process_gpu_memory_fraction = GPU_MEMORY_FRACTION
+# set_session(tf.Session(config=config))
+# print(f"Set gpu memory fraction to {GPU_MEMORY_FRACTION}")
 
 
 class Europarl:
