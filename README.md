@@ -20,6 +20,9 @@ I'm not explaining a lot, I concentrate on implementation details here. There a 
 I use [pipenv](https://github.com/pypa/pipenv) to track all dependencies and create a virtualenv.
 Follow the instruction to install pipenv and then
 
+    git clone git@github.com:hanfried/rosetta.git
+    cd rosetta
+
     pipenv install
     pipenv run jupyter notebook
 
