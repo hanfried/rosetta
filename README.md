@@ -14,6 +14,7 @@ I'm not explaining a lot, I concentrate on implementation details here. There a 
 4. [Implementing BeamSearch model](BeamSearchForMachineTranslation.ipynb)
 5. [BeamSearch model trained on a larger dataset](BeamSearchOnLargeDataset.ipynb)
 6. [Attention model with Tensorflow trained on a larger dataset](AttentionModelForMachineTranslationWithTensorflow.ipynb)
+7. [Attention model trained on full en-de dataset](AttentionModelOnFullDataset.ipynb)
 
 ## Usage / Installation
 
