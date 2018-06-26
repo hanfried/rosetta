@@ -25,7 +25,7 @@ I'm not explaining a lot, I concentrate on implementation details here. There a 
 
 ## Usage / Installation
 
-I'm using Python 3.6 with tensorflow 1.8.0 and keras 2.2.0. For details look into the Pipfiles.
+I'm using Python 3.6 with tensorflow 1.8.0 and keras 2.2.0. For details look into the [Pipfile.lock](Pipfile.lock).
 
 I use [pipenv](https://github.com/pypa/pipenv) to track all dependencies and create a virtualenv.
 Follow the instruction to install pipenv and then
