@@ -19,12 +19,15 @@ gensim = "*"
 jupyter = "*"
 tables = "*"
 tensorflow-gpu = "*"
+jupyter-console = "*"
 
 [dev-packages]
 jupyterlab = "*"
 jupyter = "*"
 nbextensions = "*"
 jupyter-contrib-nbextensions = "*"
+jupyter-console = "*"
+jupyter-client = "*"
 
 [requires]
 python_version = "3.6"
