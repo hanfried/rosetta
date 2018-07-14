@@ -1,8 +1,8 @@
 import gc
 import os
 
-from keras.backend.tensorflow_backend import set_session
 import tensorflow as tf
+from tensorflow.python.client import device_lib
 import numpy as np
 import pandas as pd
 
@@ -15,14 +15,18 @@ np.random.seed(RANDOM_STATE)
 tf.set_random_seed(RANDOM_STATE)
 print(f"Fixed random seed to {RANDOM_STATE}")
 
-# FIXME(js): Remove, should be unnecessary when working with tensorflow directly
-# # technical detail so that an instance (maybe running in a different window)
-# # doesn't take all the GPU memory resulting in some strange error messages
-# GPU_MEMORY_FRACTION = 0.5
-# config = tf.ConfigProto()
-# config.gpu_options.per_process_gpu_memory_fraction = GPU_MEMORY_FRACTION
-# set_session(tf.Session(config=config))
-# print(f"Set gpu memory fraction to {GPU_MEMORY_FRACTION}")
+
+def check_gpu_working():
+    print("Availabe devices:", device_lib.list_local_devices())
+
+    with tf.device('/gpu:0'):
+        a = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], shape=[2, 3], name='a')
+        b = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], shape=[3, 2], name='b')
+        c = tf.matmul(a, b)
+
+    with tf.Session() as sess:
+        assert np.all(sess.run(c) == np.array([[22, 28], [49, 64]]))
+        print("Cuda/Cudnn/GPU works as intended")
 
 
 class Europarl:

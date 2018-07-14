@@ -22,6 +22,12 @@ I'm not explaining a lot, I concentrate on implementation details here. There a 
 5. [BeamSearch model trained on a larger dataset](BeamSearchOnLargeDataset.ipynb)
 6. [Attention model with Tensorflow trained on a larger dataset](AttentionModelForMachineTranslationWithTensorflow.ipynb)
 7. [Attention model trained on full en-de europarliament dataset](AttentionModelOnFullDataset.ipynb)
+8. [Multiple layers attention model on full en-de dataset](AttentionModelWithMultipleLayers.ipynb)
+
+## Model weights:
+
+I saved the weights for most models in a [Google Drive Folder](https://drive.google.com/open?id=1b4wEkbnYSp-Ly73qYaU1--LDdaKjyyE5).
+In addition the file urls are also included in the notebooks as comments.
 
 ## Usage / Installation
 
@@ -33,7 +39,7 @@ Follow the instruction to install pipenv and then
     git clone git@github.com:hanfried/rosetta.git
     cd rosetta
 
-    pipenv install
+    pipenv install  --ignore-pipfile  # I haven't freezed the requirements in Pipfile, so it uses the exact versions from Pipfile.lock
     pipenv run jupyter notebook
 
 to start a jupyter notebook environment with all required modules installed and running in a virtualenv.
